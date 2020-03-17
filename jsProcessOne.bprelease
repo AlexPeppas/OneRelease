@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<bpr:release xmlns:bpr="http://www.blueprism.co.uk/product/release">
+    <bpr:name>jsProcessOne</bpr:name>
+    <bpr:release-notes>d
+</bpr:release-notes>
+    <bpr:created>2020-02-20 14:41:08Z</bpr:created>
+    <bpr:package-id>-1</bpr:package-id>
+    <bpr:package-name>&lt;Adhoc Package&gt;</bpr:package-name>
+    <bpr:user-created-by>admin</bpr:user-created-by>
+    <bpr:contents count="2">
+        <process id="c963c8c8-083d-4d5c-8e02-d22ceb8c3900" name="Katanomi_CreateLogInfoFile" published="true" xmlns="http://www.blueprism.co.uk/product/process">
+            <process name="Katanomi_CreateLogInfoFile" version="1.0" bpversion="6.6.0.15260" narrative="" byrefcollection="true">
+                <view>
+                    <camerax>0</camerax>
+                    <cameray>85</cameray>
+                    <zoom version="2">1.25</zoom>
+                </view>
+                <preconditions />
+                <endpoint narrative="" />
+                <subsheet subsheetid="7204ef77-46bd-47ee-8015-9a614500d9aa" type="Normal" published="False">
+                    <name>Get_Data_From_Queue</name>
+                    <view>
+                        <camerax>0</camerax>
+                        <cameray>24</cameray>
+                        <zoom version="2">1.25</zoom>
+                    </view>
+                </subsheet>
+                <subsheet subsheetid="f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f" type="Normal" published="False">
+                    <name>Create_Excel_File</name>
+                    <view>
+                        <camerax>0</camerax>
+                        <cameray>262</cameray>
+                        <zoom version="2">1.25</zoom>
+                    </view>
+                </subsheet>
+                <stage stageid="2595535f-2cee-4e7f-b77f-9fa678910aa9" name="Start" type="Start">
+                    <display x="30" y="-195" />
+                    <inputs>
+                        <input type="text" name="txt_QueueName" stage="txt_InputQueueName" />
+                    </inputs>
+                    <onsuccess>a3bc69f9-d184-4119-b1d2-23d0c3ec9963</onsuccess>
+                </stage>
+                <stage stageid="24d2d187-519b-4a00-9043-76d5ce99bc20" name="End" type="End">
+                    <display x="30" y="285" />
+                </stage>
+                <stage stageid="2c30b256-4114-431a-9e8e-3a75741f4158" name="Stage1" type="ProcessInfo">
+                    <display x="-195" y="-105" w="150" h="90" />
+                </stage>
+                <stage stageid="f6cff0a1-7df0-483d-b17d-1cb10c1cb072" name="Get_Completed_Items" type="Action">
+                    <narrative>Gets the work items from the specified queue which have been marked as complete</narrative>
+                    <display x="30" y="-15" />
+                    <outputs>
+                        <output type="collection" name="Completed Items" narrative="The items which were marked as complete within the given date range, up to the maximum count if one was given" stage="col_CompletedItems" />
+                    </outputs>
+                    <onsuccess>ddec1c7d-b331-4cb3-a73c-2cbb90128ed6</onsuccess>
+                    <resource object="Blueprism.Automate.clsWorkQueuesActions" action="Get Completed Items" />
+                </stage>
+                <stage stageid="434f3a86-8dfc-4b77-a323-58049efbe6c2" name="col_CompletedItems" type="Collection">
+                    <display x="-240" y="-15" />
+                    <datatype>collection</datatype>
+                    <private />
+                    <alwaysinit />
+                    <collectioninfo>
+                        <field name="Item ID" type="text" description="The Item ID of the work queue item" />
+                    </collectioninfo>
+                </stage>
+                <stage stageid="019df5b9-764b-4824-9be3-48b428d46d40" name="Get_Data_From_Queue" type="SubSheetInfo">
+                    <subsheetid>7204ef77-46bd-47ee-8015-9a614500d9aa</subsheetid>
+                    <display x="-195" y="-105" w="150" h="90" />
+                </stage>
+                <stage stageid="292baeb5-f85c-42ab-8a5a-b52c787c239f" name="Start" type="Start">
+                    <subsheetid>7204ef77-46bd-47ee-8015-9a614500d9aa</subsheetid>
+                    <display x="15" y="-105" />
+                    <onsuccess>b0cd2e63-e33b-408b-bc34-1a09fd750c01</onsuccess>
+                </stage>
+                <stage stageid="af454f76-2223-499b-8a41-b576e80113b2" name="End" type="End">
+                    <subsheetid>7204ef77-46bd-47ee-8015-9a614500d9aa</subsheetid>
+                    <display x="15" y="240" />
+                </stage>
+                <stage stageid="63e7971c-d5b6-4da4-a3ab-4543c335d089" name="Get_Data_From_Queue" type="SubSheet">
+                    <display x="30" y="135" w="90" h="60" />
+                    <onsuccess>8e531999-ecf6-4559-939c-522b490e5cc7</onsuccess>
+                    <processid>7204ef77-46bd-47ee-8015-9a614500d9aa</processid>
+                </stage>
+                <stage stageid="42164d68-aec0-4950-bff7-9703f96ab2d6" name="col_DataToReport" type="Collection">
+                    <display x="-165" y="-15" />
+                    <datatype>collection</datatype>
+                    <alwaysinit />
+                    <collectioninfo>
+                        <field name="Account" type="text" />
+                        <field name="Status" type="text" />
+                        <field name="ExceptionReason" type="text" />
+                        <field name="LoadedTime" type="datetime" />
+                        <field name="CompletedTime" type="datetime" />
+                        <field name="ExceptionTime" type="datetime" />
+                    </collectioninfo>
+                </stage>
+                <stage stageid="b0cd2e63-e33b-408b-bc34-1a09fd750c01" name="Loop_col_ItemsToSearch" type="LoopStart">
+                    <subsheetid>7204ef77-46bd-47ee-8015-9a614500d9aa</subsheetid>
+                    <display x="15" y="-45" />
+                    <onsuccess>2fe0bcad-e918-4f72-8b58-b66fcb2f8fab</onsuccess>
+                    <groupid>89f04b32-c83c-4c31-974a-628ef697509d</groupid>
+                    <looptype>ForEach</looptype>
+                    <loopdata>col_ItemsToSearch</loopdata>
+                </stage>
+                <stage stageid="376b38a6-fd0b-406f-8898-7f26ea986623" name="Loop_col_ItemsToSearch" type="LoopEnd">
+                    <subsheetid>7204ef77-46bd-47ee-8015-9a614500d9aa</subsheetid>
+                    <display x="15" y="120" />
+                    <onsuccess>af454f76-2223-499b-8a41-b576e80113b2</onsuccess>
+                    <groupid>89f04b32-c83c-4c31-974a-628ef697509d</groupid>
+                </stage>
+                <stage stageid="6fb35cbf-db90-4f04-a779-ad5ac9c778ed" name="Get_Data_From_Queue" type="Action">
+                    <subsheetid>7204ef77-46bd-47ee-8015-9a614500d9aa</subsheetid>
+                    <narrative>Get data relating to an item in a queue. You do not need to have a lock on the item to do this.</narrative>
+                    <display x="15" y="60" />
+                    <inputs>
+                        <input type="text" name="Item ID" narrative="The ID of the item to get data from. An error will be raised if this item does not exist." expr="[col_ItemsToSearch.Item ID]" />
+                    </inputs>
+                    <outputs>
+                        <output type="text" name="Key" narrative="The key value of the item." stage="col_DataToReport.Account" />
+                        <output type="number" name="Priority" narrative="The priority of the item" stage="" />
+                        <output type="text" name="Status" narrative="The status of the item." stage="col_DataToReport.Status" />
+                        <output type="number" name="Attempts" narrative="The number of attempts already made to work this item." stage="" />
+                        <output type="timespan" name="Worktime" narrative="The total time spent on this item (including previous attempts)" stage="" />
+                        <output type="timespan" name="Attempt Worktime" narrative="The amount of time spent on this particular attempt of the item" stage="" />
+                        <output type="datetime" name="Loaded DateTime" narrative="The date and time at which this item was first loaded into the queue." stage="col_DataToReport.LoadedTime" />
+                        <output type="datetime" name="Deferred DateTime" narrative="The date and time at which this item has been deferred to. Empty if this item has not been deferred." stage="" />
+                        <output type="datetime" name="Completed DateTime" narrative="The date and time at which this item was marked as complete. Empty if this item has not been marked as complete" stage="col_DataToReport.CompletedTime" />
+                        <output type="datetime" name="Exception DateTime" narrative="The date and time at which this item was marked as an exception. Empty if there has never been an exception on this item." stage="col_DataToReport.ExceptionTime" />
+                        <output type="text" name="Exception Reason" narrative="The exception reason recorded against this item." stage="col_DataToReport.ExceptionReason" />
+                        <output type="text" name="Tags" narrative="The semi-colon separated set of tags which apply to the item. " stage="" />
+                        <output type="collection" name="Data" narrative="The data associated with the item - a single collection row." stage="" />
+                    </outputs>
+                    <onsuccess>376b38a6-fd0b-406f-8898-7f26ea986623</onsuccess>
+                    <resource object="Blueprism.Automate.clsWorkQueuesActions" action="Get Item Data" />
+                </stage>
+                <stage stageid="ddec1c7d-b331-4cb3-a73c-2cbb90128ed6" name="Get_Exception_Items" type="Action">
+                    <narrative>Gets the work items from the specified queue which have been marked with an exception</narrative>
+                    <display x="30" y="30" />
+                    
+                    <onsuccess>f2d16f55-1ba8-4eba-84bd-37092886def7</onsuccess>
+                    <resource object="Blueprism.Automate.clsWorkQueuesActions" action="Get Exception Items" />
+                </stage>
+                <stage stageid="9fb0e0ac-3554-4873-938c-bc0787d0d805" name="col_ExceptionItems" type="Collection">
+                    <display x="-240" y="30" />
+                    <datatype>collection</datatype>
+                    <private />
+                    <alwaysinit />
+                    <collectioninfo>
+                        <field name="Item ID" type="text" description="The Item ID of the work queue item" />
+                    </collectioninfo>
+                </stage>
+                <stage stageid="f2d16f55-1ba8-4eba-84bd-37092886def7" name="Append_Collections" type="Action">
+                    <display x="30" y="75" />
+                    <inputs>
+                        <input type="collection" name="Main Collection" narrative="The collection to append to." expr="[col_CompletedItems]" />
+                        <input type="collection" name="Collection to Append" narrative="The collection to append." expr="[col_ExceptionItems]" />
+                    </inputs>
+                    <outputs>
+                        <output type="collection" name="Combined Collection" narrative="The combined collection." stage="col_ItemsToSearch" />
+                    </outputs>
+                    <onsuccess>63e7971c-d5b6-4da4-a3ab-4543c335d089</onsuccess>
+                    <resource object="Utility - Collection Manipulation" action="Append Rows to Collection" />
+                </stage>
+                <stage stageid="7072daec-04e5-42b6-bf56-76a912e06118" name="col_ItemsToSearch" type="Collection">
+                    <display x="-165" y="30" />
+                    <datatype>collection</datatype>
+                    <alwaysinit />
+                </stage>
+                <stage stageid="2fe0bcad-e918-4f72-8b58-b66fcb2f8fab" name="Add_Row_In_col_DataToReport" type="Action">
+                    <subsheetid>7204ef77-46bd-47ee-8015-9a614500d9aa</subsheetid>
+                    <display x="15" y="0" />
+                    <inputs>
+                        <input type="text" name="Collection Name" narrative="The name of the collection to act upon" expr="&quot;col_DataToReport&quot;" />
+                    </inputs>
+                    <onsuccess>6fb35cbf-db90-4f04-a779-ad5ac9c778ed</onsuccess>
+                    <resource object="Blueprism.AutomateProcessCore.clsCollectionActions" action="Add Row" />
+                </stage>
+                <stage stageid="fbe4754b-e6a6-4bcf-a0b9-5ac8bd96aebd" name="Add_Row_In_col_DataToReport" type="Action">
+                    <subsheetid>7204ef77-46bd-47ee-8015-9a614500d9aa</subsheetid>
+                    <display x="120" y="105" />
+                   
+                    <onsuccess>376b38a6-fd0b-406f-8898-7f26ea986623</onsuccess>
+                    <resource object="Blueprism.AutomateProcessCore.clsCollectionActions" action="Add Row" />
+                </stage>
+                <stage stageid="9caf0e55-5828-42b0-8db6-95c094e9c269" name="Create_Excel_File" type="SubSheetInfo">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="-195" y="-105" w="150" h="90" />
+                </stage>
+                <stage stageid="2662511a-d33b-4f4e-ac50-69ec606e3fe9" name="Start" type="Start">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="-135" />
+                    <onsuccess>e299b321-3736-4d8e-80f0-b74fd9ae08b5</onsuccess>
+                </stage>
+                <stage stageid="8636f9ea-f91e-40ba-b9d5-e494d272beb7" name="End" type="End">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="630" />
+                </stage>
+                <stage stageid="8e531999-ecf6-4559-939c-522b490e5cc7" name="Create_Excel_File" type="SubSheet">
+                    <display x="30" y="210" w="90" h="60" />
+                    <onsuccess>24d2d187-519b-4a00-9043-76d5ce99bc20</onsuccess>
+                    <processid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</processid>
+                </stage>
+                <stage stageid="e299b321-3736-4d8e-80f0-b74fd9ae08b5" name="Create Instance" type="Action">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="-90" w="90" h="30" />
+                    <onsuccess>5227b833-f5f0-4fd4-a505-c6908c5e7099</onsuccess>
+                    <resource object="MS Excel VBO - Deloitte Extended" action="Create Instance" />
+                </stage>
+                <stage stageid="774320d7-5943-4947-8a97-6445e309a9f6" name="nb_handle" type="Data">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="-225" y="-30" />
+                    <datatype>text</datatype>
+                    <initialvalue />
+                    <private />
+                    <alwaysinit />
+                </stage>
+                <stage stageid="5227b833-f5f0-4fd4-a505-c6908c5e7099" name="Create_Workbook" type="Action">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="-45" w="90" h="30" />
+                    <inputs>
+                        <input type="number" name="handle" narrative="The integer handle identifying the instance on which the workbook should be created. The default of zero indicates the currently active instance." expr="[nb_handle]" />
+                    </inputs>
+                    
+                    <onsuccess>f8053987-2d22-4672-990d-a7a12a16f483</onsuccess>
+                    <resource object="MS Excel VBO - Deloitte Extended" action="Create Workbook" />
+                </stage>
+                <stage stageid="2388ea62-85fa-41aa-9fb4-c500be24b0f1" name="txt_WorkbookName" type="Data">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="-225" y="15" />
+                    <datatype>number</datatype>
+                    <initialvalue />
+                    <private />
+                    <alwaysinit />
+                </stage>
+                <stage stageid="f8053987-2d22-4672-990d-a7a12a16f483" name="Write_Collection" type="Action">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    
+                    <display x="15" y="0" w="90" h="30" />
+                    <inputs>
+                        <input type="number" name="handle" narrative="The integer handle identifying the instance on which the specified collection should be written. The default of zero indicates the currently active instance." expr="[nb_handle]" />
+                        <input type="collection" name="Collection" narrative="The collection containing the data which should be written to the worksheet." expr="[col_DataToReport]" />
+                        <input type="text" name="Workbook Name" narrative="The name of the workbook within which the data should be written. The default empty value indicates the current workbook within the specified instance." expr="[txt_WorkbookName]" />
+                        <input type="text" name="Worksheet Name" narrative="The name of the worksheet on which the given data should be written. The default empty value indicates the current sheet within the specified workbook." expr="&quot;Sheet1&quot;" />
+                        <input type="text" name="Cell Reference" narrative="The reference at which the collection should be written." expr="&quot;A1&quot;" />
+                        <input type="flag" name="Include Column Names" narrative="True to indicate that the column names from the collection should be written out as the first row; False to ignore the column names and just write out the data." expr="True" />
+                    </inputs>
+                    <onsuccess>4003597b-c408-49ca-8a58-164b4d0dd4ea</onsuccess>
+                    <resource object="MS Excel VBO - Deloitte Extended" action="Write Collection" />
+                </stage>
+                <stage stageid="3bb5fa0e-4234-40d7-b0af-36a2336e7f8d" name="Save_Workbook" type="Action">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <narrative>"Sheet1"</narrative>
+                    <display x="15" y="510" w="90" h="30" />
+                    
+                    <onsuccess>1640f71d-38c7-4fde-9468-6dbf6dde1b9e</onsuccess>
+                    <resource object="MS Excel VBO - Deloitte Extended" action="Save Workbook As" />
+                </stage>
+                <stage stageid="32882381-9265-466f-ae0b-0b214915bfdf" name="txt_Filename" type="Data">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="-165" y="-30" />
+                    <datatype>text</datatype>
+                    <initialvalue />
+                    <private />
+                    <alwaysinit />
+                </stage>
+                <stage stageid="4003597b-c408-49ca-8a58-164b4d0dd4ea" name="Set_Directory" type="Calculation">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="45" />
+                    <onsuccess>04fc9929-8748-4c7b-93c3-785ebd19eff3</onsuccess>
+                    <calculation expression="[env_txt_KatanomiSharedFolder] &amp;&quot;ΕΝΗΜΕΡΩΣΗ\&quot; &amp; Replace(Today(), &quot;/&quot;, &quot;.&quot;)&amp;&quot;\&quot;" stage="txt_Directory" />
+                </stage>
+                <stage stageid="c3004c55-20c8-47a2-8ca3-e09f281114c7" name="env_txt_KatanomiSharedFolder" type="Data">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="-165" y="15" />
+                    <datatype>text</datatype>
+                    <initialvalue />
+                    <exposure>Environment</exposure>
+                    <private />
+                    <alwaysinit />
+                </stage>
+                <stage stageid="04fc9929-8748-4c7b-93c3-785ebd19eff3" name="Directory_Exists" type="Action">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="90" w="90" h="30" />
+                    <inputs>
+                        <input type="text" name="Directory Name" narrative="The directory to check exists" expr="[txt_Directory]" />
+                    </inputs>
+                    <outputs>
+                        <output type="flag" name="Exists" narrative="True if the directory exists" stage="flg_Exists" />
+                    </outputs>
+                    <onsuccess>bb7048d4-66b3-4772-b515-75a5d38f261d</onsuccess>
+                    <resource object="Utility - File Management" action="Directory Exists" />
+                </stage>
+                
+                <stage stageid="bb7048d4-66b3-4772-b515-75a5d38f261d" name="Exists?" type="Decision">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="135" />
+                    <decision expression="[flg_Exists]" />
+                    <ontrue>b913cec2-8c1c-4ce8-950e-5966459a12cb</ontrue>
+                    <onfalse>53818b21-24ed-4276-bf48-6510ff070ee7</onfalse>
+                </stage>
+                <stage stageid="53818b21-24ed-4276-bf48-6510ff070ee7" name="Create_Directory" type="Action">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="105" y="135" />
+                    <inputs>
+                        <input type="text" name="Directory Path" narrative="The path in which to create the directory" expr="[txt_Directory]" />
+                        <input type="flag" name="Error If Already Exists" narrative="True to generate an error if the directory already exists" expr="" />
+                    </inputs>
+                    <outputs>
+                        <output type="flag" name="Success" narrative="True if successful" stage="flg_Success" />
+                        <output type="text" name="Message" narrative="An error message if unsuccessful" stage="" />
+                    </outputs>
+                    <onsuccess>2885753d-e358-4b29-906a-5d390615bd2a</onsuccess>
+                    <resource object="Utility - File Management" action="Create Directory" />
+                </stage>
+                <stage stageid="fc5d6d83-d3e7-4736-b44e-971e076c68f5" name="flg_Success" type="Data">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="-165" y="60" />
+                    <datatype>flag</datatype>
+                    <initialvalue />
+                    <private />
+                    <alwaysinit />
+                </stage>
+                <stage stageid="96fa3223-487d-4e94-8f36-af4729032634" name="txt_Directory" type="Data">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="-225" y="105" />
+                    <datatype>text</datatype>
+                    <initialvalue />
+                    <private />
+                    <alwaysinit />
+                </stage>
+                <stage stageid="2f8c00d7-868f-4dca-8591-5b554d6778e0" name="Anchor1" type="Anchor">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="105" y="240" w="10" h="10" />
+                    <onsuccess>b913cec2-8c1c-4ce8-950e-5966459a12cb</onsuccess>
+                </stage>
+                <stage stageid="ba19063c-a82f-463c-93b2-5f97eebc45f0" name="Set_Filename" type="Calculation">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="300" />
+                    <onsuccess>9b8774f5-fedb-4bf9-a169-8370e48d18b2</onsuccess>
+                    <calculation expression="[txt_Directory] &amp; &quot;ΗΜΕΡΗΣΙΑ_ΕΝΗΜΕΡΩΣΗ_&quot;&amp; Replace(Today(),&quot;/&quot;,&quot;&quot;)&amp;&quot;_&quot;&amp;FormatUTCDateTime(Now()+MakeTimeSpan(0, 3,0, 0), &quot;HHmm&quot;) &amp; &quot;.xlsx&quot;" stage="txt_Filename" />
+                </stage>
+                <stage stageid="2885753d-e358-4b29-906a-5d390615bd2a" name="Created?" type="Decision">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="105" y="195" />
+                    <decision expression="[flg_Success]" />
+                    <ontrue>2f8c00d7-868f-4dca-8591-5b554d6778e0</ontrue>
+                    <onfalse>77483281-f156-4681-a72c-ea0e5755b373</onfalse>
+                </stage>
+                <stage stageid="77483281-f156-4681-a72c-ea0e5755b373" name="Exception1" type="Exception">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="195" y="195" />
+                    <exception type="SE" detail="&quot;Αδυναμία δημιουργίας φακέλου&quot;" />
+                </stage>
+                <stage stageid="f0e5054d-40ce-4c77-abb4-13f74651129e" name="Close_Workbook" type="Action">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="150" y="555" w="90" h="30" />
+                    
+                    <onsuccess>1640f71d-38c7-4fde-9468-6dbf6dde1b9e</onsuccess>
+                    <resource object="MS Excel VBO - Deloitte Extended" action="Close Workbook" />
+                </stage>
+                <stage stageid="1640f71d-38c7-4fde-9468-6dbf6dde1b9e" name="Close_Instance" type="Action">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="555" w="90" h="30" />
+                    
+                    <onsuccess>8636f9ea-f91e-40ba-b9d5-e494d272beb7</onsuccess>
+                    <resource object="MS Excel VBO - Deloitte Extended" action="Close Instance" />
+                </stage>
+                <stage stageid="214ed000-268a-4ba5-9c02-77c70ee61da1" name="nb_Counter" type="Data">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="-165" y="105" />
+                    <datatype>number</datatype>
+                    <initialvalue>1</initialvalue>
+                    <private />
+                    <alwaysinit />
+                </stage>
+                <stage stageid="a124f7e7-bad4-4536-9a94-686a4f93e27a" name="nb_Counter++" type="Calculation">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="120" y="360" />
+                    <onsuccess>9b8774f5-fedb-4bf9-a169-8370e48d18b2</onsuccess>
+                    <calculation expression="[nb_Counter] + 1 " stage="nb_Counter" />
+                </stage>
+                <stage stageid="9b8774f5-fedb-4bf9-a169-8370e48d18b2" name="File_Exists?" type="Action">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="360" />
+                    <inputs>
+                        <input type="text" name="File Name" narrative="The name of the file to check" expr="[txt_Filename]" />
+                    </inputs>
+                    <outputs>
+                        <output type="flag" name="Exists" narrative="True if the file exists" stage="flg_FileExists" />
+                    </outputs>
+                    <onsuccess>0efdab5e-e417-47bf-8cba-3faf34727afe</onsuccess>
+                    <resource object="Utility - File Management" action="File Exists" />
+                </stage>
+                <stage stageid="bb341a8e-23df-477b-87f6-6690d081d9ef" name="flg_FileExists" type="Data">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="-195" y="225" />
+                    <datatype>flag</datatype>
+                    <initialvalue />
+                    <private />
+                    <alwaysinit />
+                </stage>
+                <stage stageid="0efdab5e-e417-47bf-8cba-3faf34727afe" name="File_Exists?" type="Decision">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="450" />
+                    <decision expression="[flg_FileExists]" />
+                    <ontrue>32f57a19-754b-401e-90b5-10b589de2512</ontrue>
+                    <onfalse>3bb5fa0e-4234-40d7-b0af-36a2336e7f8d</onfalse>
+                </stage>
+                <stage stageid="dc1e1401-c746-4ef8-8fe4-139812fff407" name="Set_Filename" type="Calculation">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="210" y="450" />
+                    <onsuccess>e68d80e2-9616-417b-bac3-2059561304ac</onsuccess>
+                    <calculation expression="[txt_Directory] &amp; &quot;ΗΜΕΡΗΣΙΑ_ΕΝΗΜΕΡΩΣΗ_&quot;&amp; Replace(Today(),&quot;/&quot;,&quot;&quot;)&amp;&quot;_&quot;&amp;FormatUTCDateTime(Now()+MakeTimeSpan(0, 3,0, 0), &quot;HHmm&quot;) &amp; &quot;_&quot; &amp; [nb_Counter] &amp;&quot;.xlsx&quot;" stage="txt_Filename" />
+                </stage>
+                <stage stageid="96c295f2-9251-424f-9c4c-cb5e3dce940d" name="txt_QueueName" type="Data">
+                    <display x="-240" y="75" />
+                    <datatype>number</datatype>
+                    <initialvalue />
+                    <alwaysinit />
+                </stage>
+                <stage stageid="a1452dfa-d085-40bf-8ef0-29f4707df5ad" name="Set_Queue_Name" type="Calculation">
+                    <display x="30" y="-75" />
+                    <onsuccess>f6cff0a1-7df0-483d-b17d-1cb10c1cb072</onsuccess>
+                    <calculation expression="&quot;DebtSettlement_Accounts&quot;" stage="txt_QueueName" />
+                </stage>
+                <stage stageid="a3bc69f9-d184-4119-b1d2-23d0c3ec9963" name="Blank_Queue_Name?" type="Decision">
+                    <display x="30" y="-135" />
+                    <decision expression="[txt_InputQueueName] = &quot;&quot;" />
+                    <ontrue>a1452dfa-d085-40bf-8ef0-29f4707df5ad</ontrue>
+                    <onfalse>0796d112-44e9-47af-b101-b3b5f7438950</onfalse>
+                </stage>
+                <stage stageid="0796d112-44e9-47af-b101-b3b5f7438950" name="Anchor2" type="Anchor">
+                    <display x="-45" y="-135" w="10" h="10" />
+                    <onsuccess>6f400509-2ae4-4f0b-9522-2bb74eb93344</onsuccess>
+                </stage>
+                <stage stageid="1dd66017-c7be-4a0b-93a9-b1c1c6bdc209" name="Anchor3" type="Anchor">
+                    <display x="-45" y="-15" w="10" h="10" />
+                    <onsuccess>f6cff0a1-7df0-483d-b17d-1cb10c1cb072</onsuccess>
+                </stage>
+                <stage stageid="e06a185c-41c5-4e48-9b77-07d889b256dc" name="Set_Filename" type="Calculation">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    
+                    <display x="-75" y="360" />
+                    <onsuccess>9b8774f5-fedb-4bf9-a169-8370e48d18b2</onsuccess>
+                    <calculation expression="[txt_Directory] &amp; &quot;ΗΜΕΡΗΣΙΑ_ΕΝΗΜΕΡΩΣΗ_ΑΝΤΙΛΟΓΙΣΜΩΝ_&quot;&amp; Replace(Today(),&quot;/&quot;,&quot;&quot;)&amp;&quot;_&quot;&amp;FormatUTCDateTime(Now()+MakeTimeSpan(0, 3,0, 0), &quot;HHmm&quot;) &amp; &quot;.xlsx&quot;" stage="txt_Filename" />
+                </stage>
+                <stage stageid="b913cec2-8c1c-4ce8-950e-5966459a12cb" name="Blank_Queue_Name?" type="Decision">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="15" y="240" />
+                    <decision expression="[txt_InputQueueName] = &quot;&quot;" />
+                    <ontrue>ba19063c-a82f-463c-93b2-5f97eebc45f0</ontrue>
+                    <onfalse>f2543de6-9a83-4bbc-9bd4-ae00b5043b26</onfalse>
+                </stage>
+                <stage stageid="f2543de6-9a83-4bbc-9bd4-ae00b5043b26" name="Anchor2" type="Anchor">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="-75" y="240" w="10" h="10" />
+                    <onsuccess>e06a185c-41c5-4e48-9b77-07d889b256dc</onsuccess>
+                </stage>
+                <stage stageid="55012c97-cbbf-4412-9bfd-dad0466d7cc8" name="Set_Filename" type="Calculation">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <narrative>FormatUTCDateTime(Now()+MakeTimeSpan(0; 3;0; 0); "HH")</narrative>
+                    <display x="120" y="405" />
+                    <onsuccess>a124f7e7-bad4-4536-9a94-686a4f93e27a</onsuccess>
+                    <calculation expression="[txt_Directory] &amp; &quot;ΗΜΕΡΗΣΙΑ_ΕΝΗΜΕΡΩΣΗ_ΑΝΤΙΛΟΓΙΣΜΩΝ_&quot;&amp; Replace(Today(),&quot;/&quot;,&quot;&quot;)&amp;&quot;_&quot;&amp;FormatUTCDateTime(Now()+MakeTimeSpan(0, 3,0, 0), &quot;HHmm&quot;) &amp; &quot;_&quot; &amp; [nb_Counter] &amp;&quot;.xlsx&quot;&#xA;" stage="txt_Filename" />
+                </stage>
+                <stage stageid="32f57a19-754b-401e-90b5-10b589de2512" name="Blank_Queue_Name?" type="Decision">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="120" y="450" />
+                    <decision expression="[txt_InputQueueName] = &quot;&quot;" />
+                    <ontrue>dc1e1401-c746-4ef8-8fe4-139812fff407</ontrue>
+                    <onfalse>55012c97-cbbf-4412-9bfd-dad0466d7cc8</onfalse>
+                </stage>
+                <stage stageid="e68d80e2-9616-417b-bac3-2059561304ac" name="Anchor4" type="Anchor">
+                    <subsheetid>f01dfdb6-2b40-47f9-a357-ee5c0a6bb27f</subsheetid>
+                    <display x="210" y="360" w="10" h="10" />
+                    <onsuccess>a124f7e7-bad4-4536-9a94-686a4f93e27a</onsuccess>
+                </stage>
+                <stage stageid="05ad31d4-7d1b-45c4-b279-2f40dc6d184d" name="txt_InputQueueName" type="Data">
+                    <display x="-165" y="75" />
+                    <datatype>text</datatype>
+                    <initialvalue />
+                    <alwaysinit />
+                </stage>
+                <stage stageid="6f400509-2ae4-4f0b-9522-2bb74eb93344" name="Set_Queue_Name" type="Calculation">
+                    <display x="-45" y="-75" />
+                    <onsuccess>1dd66017-c7be-4a0b-93a9-b1c1c6bdc209</onsuccess>
+                    <calculation expression="[txt_InputQueueName]" stage="txt_QueueName" />
+                </stage>
+            </process>
+        </process>
+        <process-group id="62cb319b-450b-4437-8014-3ec5d0e5cba2" name="DebtSettlement" isDefaultGroup="False" xmlns="http://www.blueprism.co.uk/product/process-group">
+            <members>
+                <process id="c963c8c8-083d-4d5c-8e02-d22ceb8c3900" />
+            </members>
+        </process-group>
+    </bpr:contents>
+</bpr:release>
