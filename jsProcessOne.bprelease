@@ -46,7 +46,15 @@
                 <stage stageid="2c30b256-4114-431a-9e8e-3a75741f4158" name="Stage1" type="ProcessInfo">
                     <display x="-195" y="-105" w="150" h="90" />
                 </stage>
-               
+                <stage stageid="f6cff0a1-7df0-483d-b17d-1cb10c1cb072" name="Get_Completed_Items" type="Action">
+                    <narrative>Gets the work items from the specified queue which have been marked as complete</narrative>
+                    <display x="30" y="-15" />
+                    <outputs>
+                        <output type="collection" name="Completed Items" narrative="The items which were marked as complete within the given date range, up to the maximum count if one was given" stage="col_CompletedItems" />
+                    </outputs>
+                    <onsuccess>ddec1c7d-b331-4cb3-a73c-2cbb90128ed6</onsuccess>
+                    <resource object="Blueprism.Automate.clsWorkQueuesActions" action="Get Completed Items" />
+                </stage>
                 <stage stageid="434f3a86-8dfc-4b77-a323-58049efbe6c2" name="col_CompletedItems" type="Collection">
                     <display x="-240" y="-15" />
                     <datatype>collection</datatype>
@@ -105,7 +113,24 @@
                     <subsheetid>7204ef77-46bd-47ee-8015-9a614500d9aa</subsheetid>
                     <narrative>Get data relating to an item in a queue. You do not need to have a lock on the item to do this.</narrative>
                     <display x="15" y="60" />
-                    
+                    <inputs>
+                        <input type="text" name="Item ID" narrative="The ID of the item to get data from. An error will be raised if this item does not exist." expr="[col_ItemsToSearch.Item ID]" />
+                    </inputs>
+                    <outputs>
+                        <output type="text" name="Key" narrative="The key value of the item." stage="col_DataToReport.Account" />
+                        <output type="number" name="Priority" narrative="The priority of the item" stage="" />
+                        <output type="text" name="Status" narrative="The status of the item." stage="col_DataToReport.Status" />
+                        <output type="number" name="Attempts" narrative="The number of attempts already made to work this item." stage="" />
+                        <output type="timespan" name="Worktime" narrative="The total time spent on this item (including previous attempts)" stage="" />
+                        <output type="timespan" name="Attempt Worktime" narrative="The amount of time spent on this particular attempt of the item" stage="" />
+                        <output type="datetime" name="Loaded DateTime" narrative="The date and time at which this item was first loaded into the queue." stage="col_DataToReport.LoadedTime" />
+                        <output type="datetime" name="Deferred DateTime" narrative="The date and time at which this item has been deferred to. Empty if this item has not been deferred." stage="" />
+                        <output type="datetime" name="Completed DateTime" narrative="The date and time at which this item was marked as complete. Empty if this item has not been marked as complete" stage="col_DataToReport.CompletedTime" />
+                        <output type="datetime" name="Exception DateTime" narrative="The date and time at which this item was marked as an exception. Empty if there has never been an exception on this item." stage="col_DataToReport.ExceptionTime" />
+                        <output type="text" name="Exception Reason" narrative="The exception reason recorded against this item." stage="col_DataToReport.ExceptionReason" />
+                        <output type="text" name="Tags" narrative="The semi-colon separated set of tags which apply to the item. " stage="" />
+                        <output type="collection" name="Data" narrative="The data associated with the item - a single collection row." stage="" />
+                    </outputs>
                     <onsuccess>376b38a6-fd0b-406f-8898-7f26ea986623</onsuccess>
                     <resource object="Blueprism.Automate.clsWorkQueuesActions" action="Get Item Data" />
                 </stage>
@@ -139,7 +164,7 @@
                 </stage>
                 <stage stageid="7072daec-04e5-42b6-bf56-76a912e06118" name="col_ItemsToSearch" type="Collection">
                     <display x="-165" y="30" />
-                    <datatype>number</datatype>
+                    <datatype>collection</datatype>
                     <alwaysinit />
                 </stage>
                 <stage stageid="2fe0bcad-e918-4f72-8b58-b66fcb2f8fab" name="Add_Row_In_col_DataToReport" type="Action">
